@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="#{title.register}"></title>
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <link href="/css/bootstrap.min.css.map">
+    <link rel="stylesheet" href="/css/style.css">
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="/js/bootstrap.min.js"></script>
+
+    <link rel="icon" type="image/ico" href="/img/favicon.ico">
+</head>
+<body class="bg-light">
+<div class="container bg-white color">
+    <div th:insert="fragments/navigation :: navigation" th:remove="tag"></div>
+
+    <div class="container">
+        <div class="container">
+            <br>
+            <div class="alert alert-success" role="alert">
+                <h5 th:text="#{register.success.message}"></h5>
+
+                <br>
+
+                <h5 th:text="#{register.success.email}"></h5>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div th:insert="fragments/footer :: footer"></div>
+</body>
+</html>

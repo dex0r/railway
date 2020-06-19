@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security" th:with="lang=${#locale.language}" th:lang="#{language}">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="#{title.profile.history}"></title>
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <link href="/css/bootstrap.min.css.map">
+    <link rel="stylesheet" href="/css/style.css">
+
+    <script type="text/javascript" src="/js/jquery-3.5.1.min.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
+    <script src="https://kit.fontawesome.com/21a0dfb0fe.js" crossorigin="anonymous"></script>
+
+    <!-- Select2 -->
+    <link href="/css/select2.min.css" rel="stylesheet" />
+    <script src="/js/select2.min.js"></script>
+
+    <!-- Select2 Boostrap Theme -->
+    <link rel="stylesheet" href="/css/select2-bootstrap4.css">
+    <link rel="stylesheet" href="/css/select2-bootstrap4.min.css">
+
+    <link rel="icon" type="image/ico" href="/img/favicon.ico">
+
+    <script type="text/javascript" src="/js/script.js"></script>
+</head>
+<body class="bg-light">
+<div class="container bg-white color" style="min-height: 92vh;">
+    <div th:insert="fragments/navigation :: navigation" th:remove="tag"></div>
+
+    <div class="container">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4 flex-md-row pl-0">
+                    <div th:insert="fragments/profile-navigation :: profile-navigation" th:remove="tag"></div>
+                </div>
+
+                <div class="col-lg-8 align-items-center">
+                    <div class = "form-group">
+                        <h3 th:text="#{profile.history.activetickets}"></h3>
+                    </div>
+                    <div th:if="${!active_tickets.isEmpty()}" th:remove="tag">
+
+                        <table class="table table-striped">
+                            <thead>
+                            <tr>
+                                <th scope="col" th:text="#{profile.history.table.ticket}"></th>
+                                <th scope="col" th:text="#{profile.history.table.stations}"></th>
+                                <th scope="col" th:text="#{profile.history.table.purchasedate}"></th>
+                                <th scope="col" th:text="#{profile.history.table.times}"></th>
+                                <th scope="col" th:text="#{profile.history.table.price}"></th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr th:each="activeTicket : ${active_tickets}">
+
+                                <th scope="row" th:text="${activeTicket.getId()}"></th>
+                                <td th:text="__${#locale}__=='en'?${activeTicket.getDepartureStation().getLatinStationName() + ' - ' + activeTicket.getArrivalStation().getLatinStationName()}:${activeTicket.getDepartureStation().getStationName() + ' - ' + activeTicket.getArrivalStation().getStationName()}"></td>
+                                <td th:text="${#dates.format(activeTicket.getPurchaseDate(), 'dd.MM.yyyy')}"></td>
+                                <td th:text="${#dates.format(activeTicket.getDepartureTime(), 'HH:mm')} + ' - ' + ${#dates.format(activeTicket.getArrivalTime(), 'HH:mm')}"></td>
+                                <td th:text="__${#locale}__=='en'?${activeTicket.getPrice() + ' leva'}:${activeTicket.getPrice() + ' лв.'}"></td>
+                                <td>
+                                    <form class="cancelTicket" th:action="@{/profile/history/cancel-ticket}" th:method="post">
+                                        <input name="ticket" type="text" th:value="${activeTicket.getId()}" hidden>
+                                        <input type="submit" value="Откажи билет" th:name="Select" />
+                                    </form>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div th:unless="${!active_tickets.isEmpty()}" th:remove="tag">
+                        <br>
+                        <div class = "form-group">
+                            <h5><em th:text="#{profile.history.noactivetickets}"></em></h5>
+                        </div>
+                    </div>
+
+                    <br><br>
+
+                    <div class = "form-group">
+                        <h3 th:text="#{profile.history.expiredtickets}"></h3>
+                    </div>
+
+                    <div th:if="${!expired_tickets.isEmpty()}" th:remove="tag">
+                        <table class="table table-striped">
+                            <thead>
+                            <tr>
+                                <th scope="col" th:text="#{profile.history.table.ticket}"></th>
+                                <th scope="col" th:text="#{profile.history.table.stations}"></th>
+                                <th scope="col" th:text="#{profile.history.table.purchasedate}"></th>
+                                <th scope="col" th:text="#{profile.history.table.times}"></th>
+                                <th scope="col" th:text="#{profile.history.table.price}"></th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr th:each="expiredTicket : ${expired_tickets}">
+                                <th scope="row" th:text="${expiredTicket.getId()}"></th>
+                                <td th:text="__${#locale}__=='en'?${expiredTicket.getDepartureStation().getLatinStationName() + ' - ' + expiredTicket.getArrivalStation().getLatinStationName()}:${expiredTicket.getDepartureStation().getStationName() + ' - ' + expiredTicket.getArrivalStation().getStationName()}"></td>
+                                <td th:text="${#dates.format(expiredTicket.getPurchaseDate(), 'dd.MM.yyyy')}"></td>
+                                <td th:text="${#dates.format(expiredTicket.getDepartureTime(), 'HH:mm')} + ' - ' + ${#dates.format(expiredTicket.getArrivalTime(), 'HH:mm')}"></td>
+                                <td th:text="__${#locale}__=='en'?${expiredTicket.getPrice() + ' leva'}:${expiredTicket.getPrice() + ' лв.'}"></td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div th:unless="${!expired_tickets.isEmpty()}" th:remove="tag">
+                        <br>
+                        <div class = "form-group">
+                            <h5><em th:text="#{profile.history.noexpiredtickets}"></em></h5>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div th:insert="fragments/footer :: footer" th:remove="tag"></div>
+
+<div th:insert="fragments/profile-history-modal :: profile-history-modal" th:remove="tag"></div>
+</body>
+</html>

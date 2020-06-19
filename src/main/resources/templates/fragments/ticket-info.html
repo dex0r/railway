@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+</head>
+<body>
+<div th:fragment="ticket" class="border border-dark rounded">
+    <div class="container p-4">
+        <div class="text-muted text-center"><h5 th:text="#{booking.ticketinfo.ticket}"></h5></div>
+
+        <div class="text-center"><i class="fa fa-barcode"></i></div>
+        <br>
+
+        <div class="text-muted clearfix"><h6 class="float-left" th:text="#{booking.ticketinfo.traveldate}"></h6> <h6 class="float-right" id="purchaseDate" th:text="${bookingData.route.getDepartureDate()}"></h6></div>
+
+        <div class="text-muted clearfix"><h6 class="float-left" th:text="#{booking.ticketinfo.traveltime}"></h6> <h6 class="float-right" th:text="__${#locale}__=='en'?${bookingData.route.getTravelTime()}:${bookingData.route.getTravelTime()}+' мин.'"></h6></div>
+
+        <div class="text-muted clearfix"><h6 class="float-left" th:text="#{booking.ticketinfo.departurestation}"></h6> <h6 class="float-right" th:text="__${#locale}__=='en'?${bookingData.route.getDepartureStation().getLatinStationName()}:${bookingData.route.getDepartureStation().getStationName()}"></h6></div>
+
+        <div class="text-muted clearfix"><h6 class="float-left" th:text="#{booking.ticketinfo.arrivalstation}"></h6> <h6 class="float-right" th:text="__${#locale}__=='en'?${bookingData.route.getArrivalStation().getLatinStationName()}:${bookingData.route.getArrivalStation().getStationName()}"></h6></div>
+
+        <div class="text-muted clearfix"><h6 class="float-left" th:text="#{booking.ticketinfo.train}"></h6> <h6 class="float-right" id="train" th:text="${bookingData.route.getTrain().getId()}"></h6></div>
+
+        <div class="text-muted clearfix"><h6 class="float-left" th:text="#{booking.ticketinfo.departuretime}"></h6> <h6 class="float-right" th:text="__${#locale}__=='en'?${bookingData.route.getDepartureTimeString()}:${bookingData.route.getDepartureTimeString()}+' ч.'"></h6></div>
+
+        <div class="text-muted clearfix"><h6 class="float-left" th:text="#{booking.ticketinfo.arrivaltime}"></h6> <h6 class="float-right" th:text="__${#locale}__=='en'?${bookingData.route.getArrivalTimeString()}:${bookingData.route.getArrivalTimeString()}+' ч.'"></h6></div>
+
+    </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div th:fragment="payment-steps" class="form-row flex-md-row justify-content-center">
+    <div th:if="${#httpServletRequest.requestURI.contains('/booking/data') == true}" class="col-md border border-primary text-center mr-lg-2 mb-md-4 bg-primary text-white">
+        <h6>Стъпка 1</h6>
+        <h6>Данни за клиента</h6>
+    </div>
+
+    <div th:if="${#httpServletRequest.requestURI.contains('/booking/data') == false}" class="col-md border border-success text-center mr-lg-2 mb-md-4 bg-success text-white" >
+        <h6>Стъпка 1</h6>
+        <h6>Данни за клиента</h6>
+        <i class="fa fa-check" style="color:white"></i>
+    </div>
+
+
+
+    <div class="col-md border border-primary text-center mr-lg-2 mb-md-4">
+        <h6>Стъпка 2</h6>
+        <h6>Избор на място</h6>
+    </div>
+
+    <div class="col-md border border-primary text-center mr-lg-2 mb-md-4">
+        <h6>Стъпка 3</h6>
+        <h6>Начин на доставка</h6>
+    </div>
+
+    <div class="col-md border border-primary text-center mr-lg-2 mb-md-4">
+        <h6>Стъпка 4</h6>
+        <h6>Данни за плащане</h6>
+    </div>
+
+    <div class="col-md border border-primary text-center mr-lg-2 mb-md-4">
+        <h6>Стъпка 5</h6>
+        <h6>Плащане</h6>
+    </div>
+
+    <div class="col-md border border-primary text-center mr-lg-2 mb-md-4">
+        <h6>Стъпка 6</h6>
+        <h6>Преглед на поръчката</h6>
+    </div>
+</div>
+</body>
+</html>

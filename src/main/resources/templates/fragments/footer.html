@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+</head>
+<body >
+<footer class="footer fixed-bottom mx-auto py-2  bg-primary" th:fragment="footer">
+    <div class="container pl-2">
+        <div class="row">
+            <div class="col">
+                <div class="text-white py-3">© 2020 Copyright:
+                    <a href="/" class="text-white" th:text="#{copyright}"></a>
+                </div>
+            </div>
+
+            <div class="col">
+                <ul class="list-group list-group-flush list-group-horizontal justify-content-end d-flex flex-sm-row flex-xs-column social">
+                    <div class="borderless"><li class="list-group-item bg-transparent"><a href="https://www.facebook.com/BulgarianRailway/" target="_blank"><img src="/img/facebook.png" width="32" height="32"> </i></a></li></div>
+                    <div class="borderless"><li class="list-group-item bg-transparent"><a href="javascript:void();" target="_blank"><img src="/img/mail.png" width="32" height="32"></i></a></li></div>
+                </ul>
+            </div>
+        </div>
+    </div>
+</footer>
+</body>
+</html>

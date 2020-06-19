@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security" th:with="lang=${#locale.language}" th:lang="#{language}">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="#{title.register}"></title>
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <link href="/css/bootstrap.min.css.map">
+    <link rel="stylesheet" href="/css/style.css">
+
+    <script type="text/javascript" src="/js/jquery-3.5.1.min.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
+    <script src="https://kit.fontawesome.com/21a0dfb0fe.js" crossorigin="anonymous"></script>
+
+    <!-- Select2 -->
+    <link href="/css/select2.min.css" rel="stylesheet" />
+    <script src="/js/select2.min.js"></script>
+
+    <!-- Select2 Boostrap Theme -->
+    <link rel="stylesheet" href="/css/select2-bootstrap4.css">
+    <link rel="stylesheet" href="/css/select2-bootstrap4.min.css">
+
+    <link rel="icon" type="image/ico" href="/img/favicon.ico">
+
+    <script type="text/javascript" src="/js/script.js"></script>
+</head>
+<body class="bg-light">
+<div class="container bg-white color">
+    <div th:insert="fragments/navigation :: navigation" th:remove="tag"></div>
+
+    <div class="container">
+        <div class="col-8 align-center mx-auto">
+            <div th:if="${errorMessage != null}">
+                <div class="alert alert-danger" id="badEmailMessage" role="alert" th:text="#{register.error.mail}"></div>
+            </div>
+
+            <h3 class="text-center" th:text="#{register.message}"></h3>
+
+            <br>
+
+            <form th:id="registerForm" th:action="@{/register}" th:method="post" th:object="${client}">
+                <h5 th:text="#{register.user.message}"></h5>
+
+                <div class="form-row">
+                    <div class="col">
+                        <div class="form-group">
+                            <label for="firstName" th:text="#{register.firstname}"></label>&nbsp;<span th:class="text-danger">*</span>
+                            <input type="text" class="form-control" id="firstName" th:placeholder="#{register.firstname.placeholder}" th:field="*{firstName}" required>
+                        </div>
+                    </div>
+
+                    <div class="col">
+                        <div class="form-group">
+                            <label for="lastName" th:text="#{register.lastname}"></label>&nbsp;<span th:class="text-danger">*</span>
+                            <input type="text" class="form-control" id="lastName" th:placeholder="#{register.lastname.placeholder}" th:field="*{lastName}" required>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="emailAddress" th:text="#{register.email}"></label>&nbsp;<span th:class="text-danger">*</span>
+                    <input type="email" class="form-control" id="emailAddress" th:placeholder="#{login.email.placeholder}" th:field="*{email}" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="phoneNumber" th:text="#{register.phonenumber}"></label>&nbsp;<span th:class="text-danger">*</span>
+                    <input type="text" class="form-control" id="phoneNumber" th:placeholder="#{register.phonenumber.placeholder}" th:field="*{phoneNumber}" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="password" th:text="#{register.password}"></label>&nbsp;<span th:class="text-danger">*</span>
+                    <input type="password" class="form-control" id="password" th:placeholder="#{register.password.placeholder}" th:field="*{password}" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="confirmPassword" th:text="#{register.confirmpassword}"></label>&nbsp;<span th:class="text-danger">*</span>
+                    <input type="password" class="form-control" id="confirmPassword" required>
+                </div>
+
+                <div class="form-row" id="registerAddress">
+                    <h5 th:text="#{register.address.message}"></h5>&nbsp;<i class='fas fa-angle-down my-auto' style='font-size:20px'></i>
+                </div>
+
+                <div id="addressInformation" class="collapse">
+                    <div class="form-group">
+                        <label for="inputAddress" th:text="#{register.address}"></label>
+                        <input type="text" class="form-control" id="inputAddress" th:placeholder="#{register.address.placeholder}" th:field="*{address}">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="inputAddress2" th:text="#{register.addresstwo}"></label>
+                        <input type="text" class="form-control" id="inputAddress2" th:placeholder="#{register.addresstwo.placeholder}" th:field="*{additionalAddress}">
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group col-md-8">
+                            <label for="inputCity" th:text="#{register.city}"></label>
+                            <input type="text" class="form-control" id="inputCity" th:field="*{city}">
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label for="inputZip" th:text="#{register.zip}"></label>
+                            <input type="text" class="form-control" id="inputZip" th:field="*{zip}">
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="form-row" id="registerPayment">
+                    <h5 th:text="#{register.payment.message}"></h5>&nbsp;<i class='fas fa-angle-down my-auto' style='font-size:20px'></i>
+                </div>
+
+                <div id="creditCardInformation" class="collapse">
+                    <div class="form-group">
+                        <label for="inputCreditCardName" th:text="#{register.payment.name}"></label>
+                        <input type="text" class="form-control" id="inputCreditCardName" th:field="*{creditCardName}">
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <label for="inputCreditCard" th:text="#{register.payment.number}"></label>
+                            <input type="text" class="form-control" id="inputCreditCard" th:field="*{creditCardNumber}">
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label for="inputExpirationMonth" th:text="#{register.payment.expiration}"></label>
+                            <div class="row align-left">
+                                <div class="col-md-6 pr-0">
+                                    <input type="text" class="form-control" id="inputExpirationMonth" placeholder="MM" th:field="*{creditCardExpirationMonth}">
+                                </div>
+                                <div class="col-md-6 pl-1">
+                                    <input type="text" class="form-control" id="inputExpirationYear" placeholder="YY" th:field="*{creditCardExpirationYear}">
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="form-group col-md-2">
+                            <label for="inputCVV">CVV</label>
+                            <input type="text" class="form-control" id="inputCVV" th:field="*{creditCardCVV}">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-row" id="registerDiscount">
+                    <h5 th:text="#{register.discount.text}"></h5>&nbsp;<i class='fas fa-angle-down my-auto' style='font-size:20px'></i>
+                </div>
+
+                <div id="discountInformation" class="collapse">
+                    <div class="form-group">
+                        <label for="discountType">Тип документ за отстъпка</label>
+                        <select class="form-control dropdown-station" id="discountType" name="discountType" required>
+                            <option th:each="discountType : ${discount_types}"
+                                    th:value="${discountType.getId()}"
+                                    th:text="__${#locale}__=='en'?${discountType.getDocumentType()}:${discountType.getDocumentTypeBG()}">
+                            </option>
+                        </select>
+                    </div>
+                    <div class="form-group collapse" id="documentInformation">
+                        <label for="inputDiscountDocumentNumber" th:text="#{booking.discount.text}"></label>
+                        <input type="text" class="form-control" id="inputDiscountDocumentNumber" th:field="*{documentNumber}">
+                    </div>
+                </div>
+
+                <br>
+
+                <div class="form-group">
+                    <button id="registerButton" type="submit" class="btn btn-primary" th:text="#{register.button}"></button>
+                </div>
+            </form>
+        </div>
+
+
+
+    </div>
+</div>
+
+<div th:insert="fragments/footer :: footer" th:remove="tag"></div>
+</body>
+</html>

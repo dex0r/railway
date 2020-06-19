@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security" th:with="lang=${#locale.language}" th:lang="#{language}">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="#{title.searchresults}"></title>
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <link href="/css/bootstrap.min.css.map">
+    <link rel="stylesheet" href="/css/style.css">
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="/js/bootstrap.min.js"></script>
+
+    <!-- Select2 -->
+    <link href="/css/select2.min.css" rel="stylesheet" />
+    <script src="/js/select2.min.js"></script>
+
+    <!-- Select2 Boostrap Theme -->
+    <link rel="stylesheet" href="/css/select2-bootstrap4.css">
+    <link rel="stylesheet" href="/css/select2-bootstrap4.min.css">
+
+    <link rel="icon" type="image/ico" href="/img/favicon.ico">
+
+    <script type="text/javascript" src="/js/script.js"></script>
+</head>
+<body class="bg-light">
+<div class="container bg-white color">
+    <div th:insert="fragments/navigation :: navigation" th:remove="tag"></div>
+
+    <div class="container">
+        <div class="container">
+            <form method="post" action="/searchresults" th:action="@{/searchresults}" th:object="${searchData}">
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        <label for="departurestation" th:text="#{departure}"></label>
+                        <select class="form-control dropdown-station" id="departurestation" name="departurestation" th:field="*{departureStation}" required>
+                        <span th:if="${getFromSearch.getDepartureStation() != null}" th:remove="tag">
+                            <option th:value="${getFromSearch.departureStation.getLatinStationName()}"
+                                    th:text="__${#locale}__=='en'?${getFromSearch.departureStation.getLatinStationName()}:${getFromSearch.departureStation.getStationName()}" default selected></option>
+                        </span>
+                            <option th:each="station : ${searchData.stations}"
+                                    th:value="${station.getLatinStationName()}"
+                                    th:text="__${#locale}__=='en'?${station.getLatinStationName()}:${station.getStationName()}"
+                                    th:if="${station.getLatinStationName() != getFromSearch.departureStation.getLatinStationName()}">
+                            </option>
+                        </select>
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label for="ArrivalStation" th:text="#{arrival}"></label>
+                        <select class="form-control dropdown-station" id="ArrivalStation" name="arrivalstation" th:field="*{arrivalStation}" required>
+                        <span th:if="${getFromSearch.getArrivalStation() != null}" th:remove="tag">
+                            <option th:value="${getFromSearch.arrivalStation.getLatinStationName()}"
+                                    th:text="__${#locale}__=='en'?${getFromSearch.arrivalStation.getLatinStationName()}:${getFromSearch.arrivalStation.getStationName()}" default selected></option>
+                        </span>
+                            <option th:each="station : ${searchData.stations}"
+                                    th:value="${station.getLatinStationName()}"
+                                    th:text="__${#locale}__=='en'?${station.getLatinStationName()}:${station.getStationName()}"
+                                    th:if="${station.getLatinStationName() != getFromSearch.arrivalStation.getLatinStationName()}">
+                            </option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label for="departureDate" class="col-sm-2 col-form-label" th:text="#{date}"></label>
+                    <div class="col-sm-10">
+                    <span th:if="${getFromSearch.getDepartureDate() != null}" th:remove="tag">
+                        <input type="date" class="form-control" id="departureDate"  th:field="${getFromSearch.departureDate}" th:min="${#dates.format(#dates.createNow(), 'yyyy-MM-dd')}" required>
+                    </span>
+                        <span th:if="${getFromSearch.getDepartureDate() == null}" th:remove="tag">
+                        <input type="date" class="form-control" th:min="${#dates.format(#dates.createNow(), 'yyyy-MM-dd')}" required>
+                    </span>
+                    </div>
+                </div>
+
+                <button type="submit" class="btn btn-primary" th:text="#{search}"></button>
+            </form>
+        </div>
+    </div>
+    <div th:if="${results == true}" th:remove="tag">
+        <div class="container my-4" th:object="${routes}" >
+            <div class="container">
+                <div class = "row">
+                    <h2 class="pl-3" th:text="#{search.table.message}"></h2>
+                </div>
+
+                <div class = "row">
+                    <div class="col-8 col-md-12 col-sm-16">
+                        <table class="table table-striped table-responsive">
+                            <thead>
+                            <tr>
+                                <th th:text="#{search.table.train}"></th>
+                                <th th:text="#{search.table.departureStation}"></th>
+                                <th th:text="#{search.table.arrivalStation}"></th>
+                                <th th:text="#{search.table.hours}"></th>
+                                <th th:text="#{search.table.traveltime}"></th>
+                                <th th:text="#{search.table.price}" colspan="2"></th>
+                                <th></th>
+                            </tr>
+                            </thead>
+                            <tbody>
+
+                            <tr th:each="route:${routes}" >
+
+
+                                    <th th:text="__${#locale}__=='en'?${route.getTrain().getId()} + ' - ' + ${route.getTrain().getShortLatinName().charAt(0)}:${route.getTrain().getId()} + ' - ' + ${route.getTrain().getType().charAt(0)}"/>
+                                    <td th:text="__${#locale}__=='en'?${route.getDepartureStation().getLatinStationName()}:${route.getDepartureStation().getStationName()}"/>
+                                    <td th:text="__${#locale}__=='en'?${route.getArrivalStation().getLatinStationName()}:${route.getArrivalStation().getStationName()}"/>
+                                    <td th:text="__${#locale}__=='en'?${route.getDepartureTimeString()} + ' - ' + ${route.getArrivalTimeString()}:${route.getDepartureTimeString()} + 'ч. -  ' + ${route.getArrivalTimeString()} + 'ч.'"/>
+                                    <td th:text="__${#locale}__=='en'?${route.getTravelTime()}:${route.getTravelTime()} + ' мин.'"/>
+                                    <td class="border-right" th:text="__${#locale}__=='en'?${route.getFirstClassPriceString()}+' leva':${route.getFirstClassPriceString()} + ' лв.'"></td>
+                                    <td th:text="__${#locale}__=='en'?${route.getPriceString()}+' leva':${route.getPriceString()} + ' лв.'"></td>
+                                    <td>
+                                        <form th:action="@{/booking}" th:method="post">
+                                            <input th:type="text" name="train" th:value="${route.getTrain().getId()}" hidden/>
+                                            <input th:type="text" name="departureStation" th:value="${route.getDepartureStation().getLatinStationName()}" hidden/>
+                                            <input th:type="text" name="arrivalStation" th:value="${route.getArrivalStation().getLatinStationName()}" hidden/>
+                                            <input th:type="text" name="departureDate" th:value="${getFromSearch.getDepartureDate()}" hidden/>
+                                            <input th:type="text" name="departureTime" th:value="${route.getDepartureTimeString()}" hidden/>
+                                            <input th:type="text" name="arrivalTime" th:value="${route.getArrivalTimeString()}" hidden/>
+                                            <input th:type="text" name="traveltime" th:value="${route.getTravelTime()}" hidden/>
+                                            <input th:type="text" name="Price" th:value="${route.getPrice()}" hidden/>
+                                            <input th:type="text" name="FirstClassPrice" th:value="${route.getFirstClassPrice()}" hidden/>
+                                            <input type="submit" class="buyTicket" th:value="#{search.table.buyticket}" />
+                                        </form>
+                                    </td>
+
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <div th:unless="${results == true}">
+        <div class="container my-4">
+            <div class="container">
+                <div class = "row">
+                    <h2 class="pl-3" th:text="#{search.table.noresults}"></h2>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div th:insert="fragments/footer :: footer" th:remove="tag"></div>
+</body>
+</html>

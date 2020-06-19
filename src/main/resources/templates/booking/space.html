@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security" th:with="lang=${#locale.language}" th:lang="#{language}">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="#{title.profile.address}"></title>
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <link href="/css/bootstrap.min.css.map">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="/js/moment.js"></script>
+    <script type="text/javascript" src="/js/jquery-3.5.1.min.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
+
+    <!-- Select2 -->
+    <link href="/css/select2.min.css" rel="stylesheet" />
+    <script src="/js/select2.min.js"></script>
+
+    <!-- Select2 Boostrap Theme -->
+    <link rel="stylesheet" href="/css/select2-bootstrap4.css">
+    <link rel="stylesheet" href="/css/select2-bootstrap4.min.css">
+
+    <link rel="icon" type="image/ico" href="/img/favicon.ico">
+
+    <script type="text/javascript" src="/js/script.js"></script>
+</head>
+<body class="bg-light">
+<div class="container bg-white color">
+    <div th:insert="fragments/navigation :: navigation" th:remove="tag"></div>
+
+    <div class="container bg-white">
+        <div class="container">
+            <div class="form-row flex-md-row justify-content-center">
+                <a href="/booking/data" class="bookingSteps mr-lg-2 mb-md-4">
+                    <div class="col-md border border-success text-center bg-success text-white">
+                        <h6 th:text="#{booking.stepone}"></h6>
+                        <h6 th:text="#{booking.stepone.text}"></h6>
+                        <i class="fa fa-check" style="color:white"></i>
+                    </div>
+                </a>
+
+
+                <div class="col-md border border-primary text-center mr-lg-2 mb-md-4 bg-primary text-white">
+                    <h6 th:text="#{booking.steptwo}"></h6>
+                    <h6 th:text="#{booking.steptwo.text}"></h6>
+                </div>
+
+                <div class="col-md border border-primary text-center mr-lg-2 mb-md-4">
+                    <h6 th:text="#{booking.stepthree}"></h6>
+                    <h6 th:text="#{booking.stepthree.text}"></h6>
+                </div>
+
+                <div class="col-md border border-primary text-center mr-lg-2 mb-md-4">
+                    <h6 th:text="#{booking.stepfour}"></h6>
+                    <h6 th:text="#{booking.stepfour.text}"></h6>
+                </div>
+
+                <div class="col-md border border-primary text-center mr-lg-2 mb-md-4">
+                    <h6 th:text="#{booking.stepfive}"></h6>
+                    <h6 th:text="#{booking.stepfive.text}"></h6>
+                </div>
+            </div>
+
+            <br>
+
+            <div class="row">
+                <div class="col-lg-7 flex-md-row align-items-center pl-0">
+                    <div>
+                        <div id="selectSpace" class="alert alert-danger collapse" role="alert">
+                            Нужно е да изберете място във влака!
+                        </div>
+                    </div>
+                    <h5 class="text-center" th:text="#{booking.space}"></h5>
+                    <form id="spaceForm" th:action="@{/booking/delivery}" th:method="post" th:object="${bookingData}">
+                        <div class="form-group">
+                            <label for="compartmentType" th:text="#{booking.space.compartmenttype}"></label>
+                            <select class="form-control" id="compartmentType" th:field="*{compartmentType}">
+                                <option value="first" th:text="#{booking.space.firstclass}"></option>
+                                <option value="second" th:text="#{booking.space.economyclass}"></option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <button type="button" class="btn btn-primary" id="showSpaceTable" th:text="#{booking.space.button}"></button>
+                        </div>
+
+                        <div class="form-group collapse" id="spaceTable">
+                            <div class="row justify-content-center" id="wait" hidden>
+                                <img src="/img/ajax-loader.gif">
+                            </div>
+                            <div class="row justify-content-center">
+                                <div class="col-7 text-center">
+                                    <table class="tg mx-auto" id="spaces">
+                                        <thead>
+                                        <tr>
+                                            <th class="tg-0pkyx1" colspan="4"></th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <tr>
+                                            <td class="tg-0pky">1</td>
+                                            <td class="tg-0pky">3</td>
+                                            <td class="tg-0pky">5</td>
+                                            <td class="tg-0pkyx" rowspan="48"></td>
+                                        </tr>
+                                        <tr>
+                                            <td class="tg-0pkyx" colspan="3"></td>
+                                        </tr>
+                                        <tr>
+                                            <td class="tg-0pky">2</td>
+                                            <td class="tg-0pky">4</td>
+                                            <td class="tg-0pky">6</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="tg-0pky">7</td>
+                                            <td class="tg-0pky">9</td>
+                                            <td class="tg-0pky">11</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="tg-0pkyx" colspan="3"></td>
+                                        </tr>
+                                        <tr>
+                                            <td class="tg-0pky">8</td>
+                                            <td class="tg-0pky">10</td>
+                                            <td class="tg-0pky">12</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="tg-0pky">13</td>
+                                            <td class="tg-0pky">15</td>
+                                            <td class="tg-0pky">17</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="tg-0pkyx" colspan="3"></td>
+                                        </tr>
+                                        <tr>
+                                            <td class="tg-0pky">14</td>
+                                            <td class="tg-0pky">16</td>
+                                            <td class="tg-0pky">18</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="tg-0pky">19</td>
+                                            <td class="tg-0pky">21</td>
+                                            <td class="tg-0pky">23</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="tg-0pkyx" colspan="3"></td>
+                                        </tr>
+                                        <tr>
+                                            <td class="tg-0pky">20</td>
+                                            <td class="tg-0pky">22</td>
+                                            <td class="tg-0pky">24</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="tg-0pky">25</td>
+                                            <td class="tg-0pky">27</td>
+                                            <td class="tg-0pky">29</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="tg-0pkyx" colspan="3"></td>
+                                        </tr>
+                                        <tr>
+                                            <td class="tg-0pky">26</td>
+                                            <td class="tg-0pky">28</td>
+                                            <td class="tg-0pky">30</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="tg-0pky">31</td>
+                                            <td class="tg-0pky">33</td>
+                                            <td class="tg-0pky">35</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="tg-0pkyx" colspan="3"></td>
+                                        </tr>
+                                        <tr>
+                                            <td class="tg-0pky">32</td>
+                                            <td class="tg-0pky">34</td>
+                                            <td class="tg-0pky">36</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="tg-0pky">37</td>
+                                            <td class="tg-0pky">39</td>
+                                            <td class="tg-0pky">41</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="tg-0pkyx" colspan="3"></td>
+                                        </tr>
+                                        <tr>
+                                            <td class="tg-0pky">38</td>
+                                            <td class="tg-0pky">40</td>
+                                            <td class="tg-0pky">42</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="tg-0pky">43</td>
+                                            <td class="tg-0pky">45</td>
+                                            <td class="tg-0pky">47</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="tg-0pkyx" colspan="3"></td>
+                                        </tr>
+                                        <tr>
+                                            <td class="tg-0pky">44</td>
+                                            <td class="tg-0pky">46</td>
+                                            <td class="tg-0pky">48</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="tg-0pky">49</td>
+                                            <td class="tg-0pky">51</td>
+                                            <td class="tg-0pky">53</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="tg-0pkyx" colspan="3"></td>
+                                        </tr>
+                                        <tr>
+                                            <td class="tg-0pky">50</td>
+                                            <td class="tg-0pky">52</td>
+                                            <td class="tg-0pky">54</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="tg-0pky">55</td>
+                                            <td class="tg-0pky">57</td>
+                                            <td class="tg-0pky">59</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="tg-0lax" colspan="3"></td>
+                                        </tr>
+                                        <tr>
+                                            <td class="tg-0pky">56</td>
+                                            <td class="tg-0pky">58</td>
+                                            <td class="tg-0pky">60</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="tg-0pky">61</td>
+                                            <td class="tg-0pky">63</td>
+                                            <td class="tg-0pky">65</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="tg-0lax" colspan="3"></td>
+                                        </tr>
+                                        <tr>
+                                            <td class="tg-0pky">62</td>
+                                            <td class="tg-0pky">64</td>
+                                            <td class="tg-0pky">66</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="tg-0pky">67</td>
+                                            <td class="tg-0pky">69</td>
+                                            <td class="tg-0pky">71</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="tg-0lax" colspan="3"></td>
+                                        </tr>
+                                        <tr>
+                                            <td class="tg-0pky">72</td>
+                                            <td class="tg-0pky">74</td>
+                                            <td class="tg-0pky">76</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="tg-0pky">77</td>
+                                            <td class="tg-0pky">79</td>
+                                            <td class="tg-0pky">81</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="tg-0lax" colspan="3"></td>
+                                        </tr>
+                                        <tr>
+                                            <td class="tg-0pky">78</td>
+                                            <td class="tg-0pky">80</td>
+                                            <td class="tg-0pky">82</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="tg-0pky">83</td>
+                                            <td class="tg-0pky">85</td>
+                                            <td class="tg-0pky">87</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="tg-0lax" colspan="3"></td>
+                                        </tr>
+                                        <tr>
+                                            <td class="tg-0pky">84</td>
+                                            <td class="tg-0pky">86</td>
+                                            <td class="tg-0pky">88</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="tg-0pky">89</td>
+                                            <td class="tg-0pky">91</td>
+                                            <td class="tg-0pky">93</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="tg-0lax" colspan="3"></td>
+                                        </tr>
+                                        <tr>
+                                            <td class="tg-0pky">90</td>
+                                            <td class="tg-0pky">92</td>
+                                            <td class="tg-0pky">94</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="tg-0pky">95</td>
+                                            <td class="tg-0pky">97</td>
+                                            <td class="tg-0pky">99</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="tg-0lax" colspan="3"></td>
+                                        </tr>
+                                        <tr>
+                                            <td class="tg-0pky">96</td>
+                                            <td class="tg-0pky">98</td>
+                                            <td class="tg-0pky">100</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="tg-0pkyx1" colspan="4"></td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+
+                                <div class="col-5 text-center">
+                                    <h6 th:text="#{booking.space.legend}"></h6>
+                                    <div class="clearfix">
+                                        <div class="red float-left" style="width: 20px; height: 20px;"></div><h6 class="" th:text="#{booking.space.legend.reserved}"></h6>
+
+                                        <br>
+
+                                        <div class="green float-left" style="width: 20px; height: 20px;"></div><h6 class="" th:text="#{booking.space.legend.yourspace}"></h6>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group clearfix">
+                            <a href="/booking/data" class="bookingSteps">
+                                <button type="button" class="btn btn-primary float-left" name="back" id="back" th:text="#{booking.back}"></button>
+                            </a>
+                            <button type="submit" class="btn btn-primary float-right" name="proceed" id="proceedSpace" th:text="#{booking.proceed}"></button>
+                        </div>
+                    </form>
+                </div>
+
+                <div class="col-lg-5">
+                    <div th:replace="fragments/ticket-info :: ticket"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div th:insert="fragments/footer :: footer" th:remove="tag"></div>
+
+</body>
+</html>

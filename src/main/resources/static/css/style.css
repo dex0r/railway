@@ -1,0 +1,72 @@
+html,body{
+    min-height:100vh;
+}
+
+body  {
+    height: 100%;
+    padding-bottom: 70px;
+    overflow: auto;
+}
+
+.select2 {
+    width:100%!important;
+}
+
+option[default] {
+    display: none!important;
+}
+
+.fill {
+    min-height: 100vh;
+    height: 100%;
+    padding-bottom: 20px;
+}
+
+.color{
+    min-height: 90vh;
+    height:100%;
+    padding-bottom: 15px;
+}
+
+.errorMessage{
+    color: red;
+}
+
+.logout{
+    border: none;
+    background-color: #fff;
+    color: rgba(0,0,0,.5);
+}
+
+.logout:hover{
+    color: black!important;
+}
+
+.tg  {border-collapse:collapse;border-spacing:0;}
+.tg td{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+    overflow:hidden;padding:10px 5px;word-break:normal;}
+.tg th{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+    font-weight:normal;overflow:hidden;padding:10px 5px;word-break:normal;}
+.tg .tg-0pky{border-color:inherit;text-align:center;vertical-align:top}
+.tg .tg-0lax{text-align:left;vertical-align:top}
+
+.green {
+    background-color: rgb(0, 195, 0);
+    color: white;
+    font-weight: bold;
+}
+
+.red {
+    background-color: rgb(195, 0, 0);
+    color: white;
+    font-weight: bold;
+}
+
+.tg td {
+    width: 35px;
+    text-align: center;
+}
+
+.bookingSteps:hover{
+    text-decoration: none;
+}

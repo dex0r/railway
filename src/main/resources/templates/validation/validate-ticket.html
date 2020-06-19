@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security" th:with="lang=${#locale.language}" th:lang="#{language}">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="#{title.booking.success}"></title>
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <link href="/css/bootstrap.min.css.map">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="/js/bootstrap.min.js"></script>
+    <script src="https://kit.fontawesome.com/21a0dfb0fe.js" crossorigin="anonymous"></script>
+
+    <!-- Select2 -->
+    <link href="/css/select2.min.css" rel="stylesheet" />
+    <script src="/js/select2.min.js"></script>
+
+    <!-- Select2 Boostrap Theme -->
+    <link rel="stylesheet" href="/css/select2-bootstrap4.css">
+    <link rel="stylesheet" href="/css/select2-bootstrap4.min.css">
+
+    <link rel="icon" type="image/ico" href="/img/favicon.ico">
+
+    <script type="text/javascript" src="/js/script.js"></script>
+</head>
+<body class="bg-light">
+<div class="container bg-white color">
+    <div th:insert="fragments/navigation :: navigation" th:remove="tag"></div>
+
+    <div class="container bg-white">
+        <div class="container">
+            <div class="col align-center mx-auto">
+                <form th:action="@{/validation/validate}" th:method="post" id="validateTicket" th:object="${ticket}">
+                    <h5 class="text-center" th:text="#{booking.data.clientdata}"></h5>
+
+                    <br>
+                    <div class="form-row">
+                        <div class="col">
+                            <div class="form-group">
+                                <h6 th:text="#{register.firstname}"></h6>
+                                <p class="border rounded py-2 pl-1" th:text="*{client.getFirstName()}"></p>
+                            </div>
+                        </div>
+
+                        <div class="col">
+                            <div class="form-group">
+                                <h6 th:text="#{register.lastname}"></h6>
+                                <p class="border rounded py-2 pl-1" th:text="*{client.getLastName()}"></p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="col">
+                            <div class="form-group">
+                                <h6 th:text="#{register.email}"></h6>
+                                <p class="border rounded py-2 pl-1" th:text="*{client.getEmail()}"></p>
+                            </div>
+                        </div>
+
+                        <div class="col">
+                            <div class="form-group">
+                                <h6 th:text="#{register.phonenumber}"></h6>
+                                <p class="border rounded py-2 pl-1" th:text="*{client.getPhoneNumber()}"></p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div th:if="${ticket.getClient().getDiscountType().getId() != 1}" th:remove="tag">
+
+                        <h5 class="text-center" th:text="#{booking.review.discount}"></h5>
+                        <br>
+
+                        <div class="form-group">
+                            <h6 th:text="#{booking.discounttype.text}"></h6>
+                            <p class="border rounded py-2 pl-1" th:text="*{client.getDiscountType().getDocumentTypeBG()}"></p>
+                        </div>
+
+                        <div class="form-group">
+                            <h6>Номер на документа:</h6>
+                            <p class="border rounded py-2 pl-1" th:text="*{client.getDocumentNumber()}"></p>
+                        </div>
+
+                        <div class="form-group">
+                            <h6 th:text="#{booking.review.discountvalue}"></h6>
+                            <p class="border rounded py-2 pl-1" th:text="*{client.getDiscountType().getDiscountValue() + ' %'}"></p>
+                        </div>
+
+                    </div>
+
+
+                    <h5 class="text-center" th:text="#{booking.ticketinfo.ticket}"></h5>
+                    <br>
+
+                    <div class="form-row">
+                        <div class="col">
+                            <div class="form-group">
+                                <h6>Билет номер</h6>
+                                <p class="border rounded py-2 pl-1" th:text="*{id}"></p>
+                            </div>
+                        </div>
+
+                        <div class="col">
+                            <div class="form-group">
+                                <h6 th:text="#{booking.ticketinfo.traveldate}"></h6>
+                                <p class="border rounded py-2 pl-1" th:text="*{#dates.format(purchaseDate, 'dd.MM.yyyy')}"></p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="col">
+                            <div class="form-group">
+                                <h6 th:text="#{booking.ticketinfo.train}"></h6>
+                                <p class="border rounded py-2 pl-1" th:text="*{train.getId()}"></p>
+                            </div>
+                        </div>
+
+                        <div class="col">
+                            <div class="form-group">
+                                <h6>Цена</h6>
+                                <p class="border rounded py-2 pl-1" th:text="*{Price}"></p>
+                            </div>
+                        </div>
+                    </div>
+
+
+
+                    <div class="form-row">
+                        <div class="col">
+                            <div class="form-group">
+                                <h6 th:text="#{booking.ticketinfo.departurestation}"></h6>
+                                <p class="border rounded py-2 pl-1" th:text="*{departureStation.getStationName()}"></p>
+                            </div>
+                        </div>
+
+                        <div class="col">
+                            <div class="form-group">
+                                <h6 th:text="#{booking.ticketinfo.arrivalstation}"></h6>
+                                <p class="border rounded py-2 pl-1" th:text="*{arrivalStation.getStationName()}"></p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="col">
+                            <div class="form-group">
+                                <h6 th:text="#{booking.ticketinfo.departuretime}"></h6>
+                                <p class="border rounded py-2 pl-1" th:text="*{#dates.format(departureTime, 'HH:mm')}"></p>
+                            </div>
+                        </div>
+
+                        <div class="col">
+                            <div class="form-group">
+                                <h6 th:text="#{booking.ticketinfo.arrivaltime}"></h6>
+                                <p class="border rounded py-2 pl-1" th:text="*{#dates.format(arrivalTime, 'HH:mm')}"></p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group text-center">
+                        <button type="submit" class="btn btn-primary btn-lg">Валидирай билет</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div th:insert="fragments/footer :: footer" th:remove="tag"></div>
+
+<div th:insert="fragments/profile-modal :: profile-modal" th:remove="tag"></div>
+</body>
+</html>

@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security" th:with="lang=${#locale.language}" th:lang="#{language}">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="#{title.profile.address}"></title>
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <link href="/css/bootstrap.min.css.map">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="/js/bootstrap.min.js"></script>
+
+    <!-- Select2 -->
+    <link href="/css/select2.min.css" rel="stylesheet" />
+    <script src="/js/select2.min.js"></script>
+
+    <!-- Select2 Boostrap Theme -->
+    <link rel="stylesheet" href="/css/select2-bootstrap4.css">
+    <link rel="stylesheet" href="/css/select2-bootstrap4.min.css">
+
+    <link rel="icon" type="image/ico" href="/img/favicon.ico">
+
+    <script type="text/javascript" src="/js/script.js"></script>
+</head>
+<body class="bg-light">
+<div class="container bg-white color">
+    <div th:insert="fragments/navigation :: navigation" th:remove="tag"></div>
+
+    <div class="container bg-white">
+        <div class="container">
+            <div class="form-row flex-md-row justify-content-center">
+                <div class="col-md border border-success text-center mr-lg-2 mb-md-4 bg-success text-white">
+                    <h6 th:text="#{booking.stepone}"></h6>
+                    <h6 th:text="#{booking.stepone.text}"></h6>
+                    <i class="fa fa-check" style="color:white"></i>
+                </div>
+
+                <div class="col-md border border-success text-center mr-lg-2 mb-md-4 bg-success text-white">
+                    <h6 th:text="#{booking.steptwo}"></h6>
+                    <h6 th:text="#{booking.steptwo.text}"></h6>
+                    <i class="fa fa-check" style="color:white"></i>
+                </div>
+
+                <div class="col-md border border-success text-center mr-lg-2 mb-md-4 bg-success text-white">
+                    <h6 th:text="#{booking.stepthree}"></h6>
+                    <h6 th:text="#{booking.stepthree.text}"></h6>
+                    <i class="fa fa-check" style="color:white"></i>
+                </div>
+
+                <div class="col-md border border-primary text-center mr-lg-2 mb-md-4 bg-primary text-white">
+                    <h6 th:text="#{booking.stepfour}"></h6>
+                    <h6 th:text="#{booking.stepfour.text}"></h6>
+                </div>
+
+                <div class="col-md border border-primary text-center mr-lg-2 mb-md-4">
+                    <h6 th:text="#{booking.stepfive}"></h6>
+                    <h6 th:text="#{booking.stepfive.text}"></h6>
+                </div>
+            </div>
+
+            <br>
+
+            <div class="row">
+                <div class="col-lg-7 flex-md-row align-items-center pl-0">
+                    <div sec:authorize="isAuthenticated()">
+                        <h5 class="text-center" th:text="#{booking.payment.loggedmessage}"></h5>
+                        <form id="paymentForm" th:action="@{/booking/review}" th:method="post" th:object="${bookingData}">
+                            <div class="form-group">
+                                <label for="inputCreditCardName" th:text="#{register.payment.name}"></label>
+                                <input type="text" class="form-control" id="inputCreditCardName" th:field="*{client.creditCardName}">
+                            </div>
+
+                            <div class="form-row">
+                                <div class="form-group col-md-6">
+                                    <label for="inputCreditCard" th:text="#{register.payment.number}"></label>
+                                    <input type="text" class="form-control" id="inputCreditCard" th:field="*{client.creditCardNumber}">
+                                </div>
+                                <div class="form-group col-md-4">
+                                    <label for="inputExpirationMonth" th:text="#{register.payment.expiration}"></label>
+                                    <div class="row align-left">
+                                        <div class="col-md-6 pr-0">
+                                            <input type="text" class="form-control" id="inputExpirationMonth" placeholder="MM" th:field="*{client.creditCardExpirationMonth}">
+                                        </div>
+                                        <div class="col-md-6 pl-1">
+                                            <input type="text" class="form-control" id="inputExpirationYear" placeholder="YY" th:field="*{client.creditCardExpirationYear}">
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <div class="form-group col-md-2">
+                                    <label for="inputCVV">CVV</label>
+                                    <input type="text" class="form-control" id="inputCVV" th:field="*{client.creditCardCVV}">
+                                    <input type="text" class="form-control" id="maskedCVV" value="***" readonly>
+                                </div>
+                            </div>
+
+                            <div class="form-group clearfix">
+                                <a href="/booking/delivery" class="bookingSteps">
+                                    <button type="button" class="btn btn-primary float-left" name="back" id="back" th:text="#{booking.back}"></button>
+                                </a>
+                                <button type="submit" class="btn btn-primary float-right" id="proceed" th:text="#{booking.proceed}"></button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+                <div class="col-lg-5">
+                    <div th:replace="fragments/ticket-info :: ticket"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div th:insert="fragments/footer :: footer" th:remove="tag"></div>
+
+</body>
+</html>

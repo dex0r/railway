@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+</head>
+<body>
+<nav class="navbar-light" th:fragment="profile-navigation">
+    <div class="container my-4">
+        <ul class="nav  navbar-nav  flex-column" style="border-right: 1px solid rgba(0,0,0,.5);">
+            <li class="nav-item">
+                <a class="nav-link active" href="/profile/information"><h6 th:text="#{profile.info}"></h6></a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/profile/history"><h6 th:text="#{profile.history}"></h6></a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/profile/address"><h6 th:text="#{profile.address}"></h6></a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/profile/payment"><h6 th:text="#{profile.payment}"></h6></a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/profile/discount"><h6 th:text="#{profile.discount}"></h6></a>
+            </li>
+        </ul>
+    </div>
+</nav>
+</body>
+</html>
